@@ -10,7 +10,9 @@ matrix:
         - TOXENV=py36
         - PIP=pip3
         - CIBW_BUILD=cp36-*
-    - arch: arm64
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
       name: linux-py36
       language: python
       python: 3.6
@@ -32,7 +34,9 @@ matrix:
         - TOXENV=py37
         - PIP=pip3
         - CIBW_BUILD=cp37-*
-    - arch: arm64
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
       name: linux-py37
       language: python
       python: 3.7
@@ -54,7 +58,9 @@ matrix:
         - TOXENV=py38
         - PIP=pip3
         - CIBW_BUILD=cp3!-*
-    - arch: arm64
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
       name: linux-py38
       language: python
       python: 3.8
@@ -65,50 +71,21 @@ matrix:
         - TOXENV=py38
         - PIP=pip3
         - CIBW_BUILD=cp38-*
-
-    - name: osx-py36
-      os: osx
-      language: generic
-      env:
-        - TOXENV=py36
-        - PIP=pip3
-        - CIBW_BUILD=cp36-*
-        - CIBW_TEST_COMMAND="pushd {project}; tox ; popd"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install -r requirements.txt"
-      install:
-        - ${PIP} install cibuildwheel==0.10.2
-      script:
-        - cibuildwheel --output-dir dist
-
-    - name: osx-py37
-      os: osx
-      language: generic
-      env:
-        - TOXENV=py37
-        - PIP=pip3
-        - CIBW_BUILD=cp37-*
-        - CIBW_TEST_COMMAND="pushd {project}; tox ; popd"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install -r requirements.txt"
-      install:
-        - ${PIP} install cibuildwheel==0.10.2
-      script:
-        - cibuildwheel --output-dir dist
-
-    - name: osx-py38
-      os: osx
-      language: generic
-      env:
-        - TOXENV=py38
-        - PIP=pip3
-        - CIBW_BUILD=cp38-*
-        - CIBW_TEST_COMMAND="pushd {project}; tox ; popd"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install -r requirements.txt"
-      install:
-        - ${PIP} install cibuildwheel==0.10.2
-      script:
-        - cibuildwheel --output-dir dist
-
     - name: pypy3.6
+      language: python
+      python: pypy3
+      env:
+        - TOXENV=pypy3
+        - PIP=pip
+      install:
+        - ${PIP} install -U pip
+        - ${PIP} install -r requirements.txt
+      script:
+        - tox
+    - name: pypy3.6
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
       language: python
       python: pypy3
       env:
@@ -131,7 +108,9 @@ matrix:
         - ${PIP} install -r requirements.txt
       script:
         - tox
-    - arch: arm64
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
       name: doctest38
       language: python
       python: 3.8
@@ -155,7 +134,9 @@ matrix:
         - ${PIP} install -r requirements.txt
       script:
         - tox
-    - arch: arm64
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
       name: memorytest38
       language: python
       python: 3.8
